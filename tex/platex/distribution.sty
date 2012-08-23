@@ -1,11 +1,14 @@
 \NeedsTeXFormat{pLaTeX2e}
 \ProvidesPackage{distribution}
-   [2012/08/23 v1.0.1 style file ``distribution.sty''^^J
+   [2012/08/23 v1.0.2 style file ``distribution.sty''^^J
     by KIEDA Yuwsuke]
 
 \@ifundefined{@distribution@char@width}{\newdimen\@distribution@char@width}{\relax}
+\newbox\distributionchar@box
 \def\distributionchar#1#2{%
-  \ifdim #1 < \@distribution@char@width
+  \setbox\distributionchar@box\hbox{#2}%
+  \@distribution@char@width\wd\distributionchar@box
+  \ifdim \@distribution@char@width < #1
     \leavevmode
     \hb@xt@#1{\kanjiskip=0pt plus 1fil minus 1fil\xkanjiskip=\kanjiskip
       #2}%
