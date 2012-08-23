@@ -1,0 +1,47 @@
+\NeedsTeXFormat{pLaTeX2e}
+\ProvidesPackage{distribution}
+   [2012/08/23 v1.0 style file ``distribution.sty''^^J
+    by KIEDA Yuwsuke]
+
+\@ifundefined{@distribution@char@width}{\newdimen\@distribution@char@width}{\relax}
+\def\distributionchar#1#2{%
+  \ifdim #1 < \@distribution@char@width
+    \leavevmode
+    \hb@xt@#1{\kanjiskip=0pt plus 1fil minus 1fil\xkanjiskip=\kanjiskip
+      #2}%
+  \else
+    #2%
+  \fi}
+
+\@ifundefined{@distribution@line@height}{\newdimen\@distribution@line@height}{\relax}
+\def\distributionline{%
+  \@testopt{\@distributionline}{c}}
+\def\@distributionline[#1]#2#3{%
+  \def\@distributionline@opt{#1}%
+  \def\@distributionline@bottom{b}%
+  \def\@distributionline@top{t}%
+  \def\@distributionline@center{c}%
+  \noindent
+  \@distribution@line@height#2\relax
+  \advance\@distribution@line@height -1\Cvs
+  \advance\@distribution@line@height 1\Cht
+  \advance\@distribution@line@height 1\Cdp
+  \vbox to \@distribution@line@height{%
+    \ifx\@distributionline@opt\@distributionline@top
+      \noindent\parbox{\columnwidth}{#3}%
+      \vss
+    \else\ifx\@distributionline@opt\@distributionline@center
+      \vss
+      \noindent\parbox{\columnwidth}{#3}%
+      \vss
+    \else\ifx\@distributionline@opt\@distributionline@bottom
+      \vss
+      \noindent\parbox{\columnwidth}{#3}%
+    \else
+      {\@latex@error{%
+          Option of \noexpand\distributionline ``\noexpand#1'' is undefined}\@ehc}
+    \fi\fi\fi
+    }\vspace{-.12zh}%
+}
+
+\endinput
